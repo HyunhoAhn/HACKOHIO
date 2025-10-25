@@ -1,5 +1,5 @@
 fastapi
-pydantic
+pydantic-settings
 uvicorn
 python-dotenv==1.1.1
 requests>=2.31.0
