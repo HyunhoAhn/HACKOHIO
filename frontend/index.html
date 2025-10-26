@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawk English Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary-color: #10b981;
+            --danger-color: #ef4444;
+            --danger-dark: #dc2626;
+            --warning-color: #f59e0b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            box-shadow: 0 0 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+            color: white;
+            padding: clamp(24px, 5vw, 48px) clamp(20px, 5vw, 40px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .header-icon {
+            font-size: clamp(2rem, 5vw, 3rem);
+        }
+
+        .header p {
+            opacity: 0.95;
+            font-size: clamp(0.875rem, 2vw, 1.125rem);
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+
+        .main-content {
+            padding: clamp(24px, 5vw, 48px) clamp(20px, 5vw, 40px);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: clamp(24px, 4vw, 32px);
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .section-header {
+            padding: clamp(16px, 3vw, 24px);
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--text-primary);
+            font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .section-body {
+            padding: clamp(20px, 4vw, 32px);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.875rem;
+            letter-spacing: 0.01em;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-helper {
+            margin-top: 8px;
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-inline {
+            padding: 6px 12px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-inline:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-right: 12px;
+            margin-bottom: 12px;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-success {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: var(--danger-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .recording {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1.5px solid #fecaca;
+        }
+
+        .recording-indicator {
+            width: 16px;
+            height: 16px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            50% { 
+                opacity: 0.7;
+                box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+            }
+        }
+
+        .response-box {
+            background: var(--bg-secondary);
+            padding: clamp(20px, 4vw, 28px);
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .response-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .response-box h4 {
+            color: var(--text-primary);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+
+        .response-box h5 {
+            color: var(--text-secondary);
+            margin-top: 16px;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .response-box p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.9375rem;
+        }
+
+        .response-box pre {
+            background: var(--bg-tertiary);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.8125rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .audio-player {
+            margin: 16px 0;
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .status {
+            padding: 14px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        .conversation-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .info-card h4 {
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .info-card p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            word-break: break-all;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .score-item {
+            background: var(--bg-primary);
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        details {
+            margin-top: 20px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9375rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        summary:hover {
+            color: var(--primary-dark);
+        }
+
+        details[open] summary {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-item {
+            background: var(--bg-secondary);
+            padding: 14px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .error-item {
+            background: #fffbeb;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 3px solid var(--warning-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .section-disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body {
+                background: var(--bg-primary);
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .header {
+                padding: 32px 24px;
+            }
+
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .section-body {
+                padding: 20px 16px;
+            }
+
+            .btn {
+                width: 100%;
+                margin-right: 0;
+                justify-content: center;
+            }
+
+            .conversation-info {
+                grid-template-columns: 1fr;
+            }
+
+            .score-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-card p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .score-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-helper {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .btn-inline {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>
+                    <span class="header-icon">🦅</span>
+                    <span>Hawk English Learning</span>
+                </h1>
+                <p>AI-Powered English Conversation Practice</p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Step 1: Start Conversation -->
+            <div class="section" id="startSection">
+                <div class="section-header">
+                    <h2>1️⃣ Start Conversation</h2>
+                </div>
+                <div class="section-body">
+                    <div class="input-group">
+                        <label for="userId">User ID (UUID Format)</label>
+                        <input type="text" id="userId" placeholder="e.g., 123e4567-e89b-12d3-a456-426614174000" value="123e4567-e89b-12d3-a456-426614174000">
+                        <div class="input-helper">
+                            <span>UUID format required</span>
+                            <button class="btn-inline" onclick="generateUUID()">Generate UUID</button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="topic">Topic (Optional)</label>
+                        <input type="text" id="topic" placeholder="e.g., Daily Life, Travel, Food...">
+                    </div>
+                    <button class="btn btn-primary" onclick="startConversation()">
+                        <span>▶</span>
+                        <span>Start Conversation</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Conversation Info -->
+            <div class="section hidden" id="conversationSection">
+                <div class="section-header">
+                    <h2>💬 Current Session</h2>
+                </div>
+                <div class="section-body">
+                    <div class="conversation-info">
+                        <div class="info-card">
+                            <h4>Conversation ID</h4>
+                            <p id="conversationId">-</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>Session ID</h4>
+                            <p id="sessionId">-</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>Current Turn</h4>
+                            <p id="currentTurn">0</p>
+                        </div>
+                    </div>
+
+                    <div id="welcomeMessage" class="response-box">
+                        <h3>Welcome Message</h3>
+                        <p id="welcomeText"></p>
+                        <audio id="welcomeAudio" class="audio-player" controls></audio>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Record and Send -->
+            <div class="section hidden" id="recordSection">
+                <div class="section-header">
+                    <h2>2️⃣ Record & Send Audio</h2>
+                </div>
+                <div class="section-body">
+                    <div class="recording hidden" id="recordingIndicator">
+                        <div class="recording-indicator"></div>
+                        <span style="font-weight: 500; color: var(--danger-color);">Recording in progress...</span>
+                    </div>
+
+                    <button class="btn btn-success" id="recordBtn" onclick="startRecording()">
+                        <span>🎤</span>
+                        <span>Start Recording</span>
+                    </button>
+                    <button class="btn btn-danger hidden" id="stopBtn" onclick="stopRecording()">
+                        <span>⏹️</span>
+                        <span>Stop Recording</span>
+                    </button>
+                    <button class="btn btn-primary hidden" id="sendBtn" onclick="sendAudio()">
+                        <span>📤</span>
+                        <span>Send Audio</span>
+                    </button>
+
+                    <audio id="recordedAudio" class="audio-player hidden" controls></audio>
+
+                    <div id="turnResponse" class="response-box hidden">
+                        <h3>Response Results</h3>
+                        <div id="transcriptionResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: End Conversation -->
+            <div class="section hidden" id="endSection">
+                <div class="section-header">
+                    <h2>3️⃣ End Conversation</h2>
+                </div>
+                <div class="section-body">
+                    <button class="btn btn-danger" onclick="endConversation()">
+                        <span>🏁</span>
+                        <span>End & View Summary</span>
+                    </button>
+                    
+                    <div id="summaryResponse" class="response-box hidden">
+                        <h3>Conversation Summary</h3>
+                        <div id="summaryResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="statusMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:8000/api/v1';
+        let conversationId = null;
+        let sessionId = null;
+        let currentTurn = 0;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordedBlob = null;
+
+        function generateUUID() {
+            const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            document.getElementById('userId').value = uuid;
+            showStatus('UUID generated successfully!', 'success');
+        }
+
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('statusMessage');
+            const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ⓘ';
+            statusDiv.innerHTML = `<div class="status ${type}"><span>${icon}</span><span>${message}</span></div>`;
+            setTimeout(() => {
+                statusDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        async function startConversation() {
+            const userId = document.getElementById('userId').value;
+            const topic = document.getElementById('topic').value;
+
+            // Validate UUID format
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+            if (!userId) {
+                showStatus('Please enter a User ID', 'error');
+                return;
+            }
+            if (!uuidRegex.test(userId)) {
+                showStatus('Invalid UUID format. Example: 123e4567-e89b-12d3-a456-426614174000', 'error');
+                return;
+            }
+
+            try {
+                showStatus('Starting conversation...', 'info');
+
+                const requestBody = {
+                    user_id: userId
+                };
+                if (topic) {
+                    requestBody.topic = topic;
+                }
+
+                const response = await fetch(`${API_BASE_URL}/conversations`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Server error:', errorText);
+                    throw new Error(`HTTP error! status: ${response.status}, detail: ${errorText}`);
+                }
+
+                const data = await response.json();
+                conversationId = data.conversation_id;
+                sessionId = data.session_id;
+
+                document.getElementById('conversationId').textContent = conversationId;
+                document.getElementById('sessionId').textContent = sessionId;
+                document.getElementById('welcomeText').textContent = data.welcome_message_text;
+                
+                if (data.welcome_message_audio_url) {
+                    const audioPlayer = document.getElementById('welcomeAudio');
+                    audioPlayer.src = data.welcome_message_audio_url;
+                    audioPlayer.style.display = 'block';
+                    audioPlayer.onerror = function() {
+                        console.warn('Audio file not available');
+                        audioPlayer.style.display = 'none';
+                    };
+                } else {
+                    document.getElementById('welcomeAudio').style.display = 'none';
+                }
+
+                document.getElementById('conversationSection').classList.remove('hidden');
+                document.getElementById('recordSection').classList.remove('hidden');
+                document.getElementById('endSection').classList.remove('hidden');
+                document.getElementById('startSection').classList.add('section-disabled');
+
+                showStatus('Conversation started successfully! 🎉', 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    recordedBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const audioURL = URL.createObjectURL(recordedBlob);
+                    const audioPlayer = document.getElementById('recordedAudio');
+                    audioPlayer.src = audioURL;
+                    audioPlayer.classList.remove('hidden');
+                    document.getElementById('sendBtn').classList.remove('hidden');
+                };
+
+                mediaRecorder.start();
+                document.getElementById('recordBtn').classList.add('hidden');
+                document.getElementById('stopBtn').classList.remove('hidden');
+                document.getElementById('recordingIndicator').classList.remove('hidden');
+                showStatus('Recording... 🎤', 'info');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus(`Microphone access error: ${error.message}`, 'error');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                document.getElementById('stopBtn').classList.add('hidden');
+                document.getElementById('recordBtn').classList.remove('hidden');
+                document.getElementById('recordingIndicator').classList.add('hidden');
+                showStatus('Recording completed. Click send button.', 'success');
+            }
+        }
+
+        async function sendAudio() {
+            if (!recordedBlob) {
+                showStatus('No recorded audio available', 'error');
+                return;
+            }
+
+            currentTurn++;
+            document.getElementById('currentTurn').textContent = currentTurn;
+
+            const formData = new FormData();
+            formData.append('turn_number', currentTurn);
+            formData.append('audio_file', recordedBlob, `turn_${currentTurn}.wav`);
+
+            try {
+                showStatus('Processing audio... ⏳', 'info');
+
+                const response = await fetch(`${API_BASE_URL}/conversations/${conversationId}/turns`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                // Display results
+                const resultDiv = document.getElementById('transcriptionResult');
+                resultDiv.innerHTML = `
+                    <h4>Your Speech:</h4>
+                    <p style="font-size: 1.05rem; font-weight: 500; color: var(--text-primary); background: var(--bg-tertiary); padding: 12px; border-radius: 8px; border-left: 3px solid var(--primary-color);">
+                        "${data.user_text}"
+                    </p>
+                    
+                    <h4>Pronunciation Assessment:</h4>
+                    <div class="score-grid">
+                        <div class="score-item">
+                            <div class="score-label">Overall</div>
+                            <div class="score-value">${data.feedback?.overall_score || 'N/A'}</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-label">Pronunciation</div>
+                            <div class="score-value">${data.feedback?.pronunciation_score || 'N/A'}</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-label">Vocabulary</div>
+                            <div class="score-value">${data.feedback?.vocabulary_score || 'N/A'}</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-label">Grammar</div>
+                            <div class="score-value">${data.feedback?.grammar_score || 'N/A'}</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-label">Fluency</div>
+                            <div class="score-value">${data.feedback?.fluency_score || 'N/A'}</div>
+                        </div>
+                    </div>
+                    
+                    <h4>Overall Feedback:</h4>
+                    <p style="line-height: 1.8; padding: 12px; background: var(--bg-tertiary); border-radius: 8px;">${data.feedback?.overall_comment || 'N/A'}</p>
+                    
+                    <h4>Feedback Audio:</h4>
+                    <p style="margin-bottom: 8px;">${data.feedback_text || ''}</p>
+                    <audio class="audio-player" controls src="${data.feedback_audio_url || ''}"></audio>
+                    
+                    <h4>AI Response:</h4>
+                    <p style="line-height: 1.8; padding: 12px; background: var(--bg-tertiary); border-radius: 8px; margin-bottom: 8px;">${data.llm_response_text || 'N/A'}</p>
+                    <audio class="audio-player" controls src="${data.llm_response_audio_url || ''}"></audio>
+                    
+                    <details>
+                        <summary>📊 View Detailed Analysis</summary>
+                        <div style="margin-top: 15px;">
+                            <h5>Sentence Scores:</h5>
+                            ${data.feedback?.sentences?.map(s => `
+                                <div class="detail-item">
+                                    <p style="font-weight: 600; margin-bottom: 8px;">${s.text}</p>
+                                    <p style="font-size: 0.875rem; color: var(--text-secondary);">
+                                        Accuracy: <strong>${s.accuracy_score || 'N/A'}</strong> | 
+                                        Fluency: <strong>${s.fluency_score || 'N/A'}</strong> | 
+                                        Completeness: <strong>${s.completeness_score || 'N/A'}</strong>
+                                    </p>
+                                </div>
+                            `).join('') || '<p>No sentence data</p>'}
+                            
+                            ${data.feedback?.pronunciation_errors?.length > 0 ? `
+                                <h5 style="margin-top: 15px;">Pronunciation Errors:</h5>
+                                ${data.feedback.pronunciation_errors.map(e => `
+                                    <div class="error-item">
+                                        <strong style="color: var(--warning-color);">${e.word}</strong> - 
+                                        <span>${e.error_type}</span> 
+                                        <span style="font-size: 0.875rem; color: var(--text-tertiary);">(Score: ${e.accuracy_score})</span>
+                                    </div>
+                                `).join('')}
+                            ` : ''}
+                            
+                            <h5 style="margin-top: 15px;">Strengths:</h5>
+                            ${Object.entries(data.feedback?.strengths || {}).map(([key, values]) => `
+                                <p style="margin-top: 10px;"><strong style="color: var(--secondary-color);">${key}:</strong></p>
+                                <ul style="margin-left: 20px; color: var(--text-secondary);">
+                                    ${values.map(v => `<li style="margin: 4px 0;">${v}</li>`).join('')}
+                                </ul>
+                            `).join('')}
+                            
+                            <h5 style="margin-top: 15px;">Areas for Improvement:</h5>
+                            ${Object.entries(data.feedback?.improvements || {}).map(([key, values]) => `
+                                <p style="margin-top: 10px;"><strong style="color: var(--primary-color);">${key}:</strong></p>
+                                <ul style="margin-left: 20px; color: var(--text-secondary);">
+                                    ${values.map(v => `<li style="margin: 4px 0;">${v}</li>`).join('')}
+                                </ul>
+                            `).join('')}
+                        </div>
+                    </details>
+                `;
+
+                document.getElementById('turnResponse').classList.remove('hidden');
+                document.getElementById('sendBtn').classList.add('hidden');
+                showStatus('Processing completed! Record next turn. ✅', 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function endConversation() {
+            if (!conversationId) {
+                showStatus('No active conversation', 'error');
+                return;
+            }
+
+            try {
+                showStatus('Ending conversation...', 'info');
+
+                const response = await fetch(`${API_BASE_URL}/conversations/${conversationId}/end`, {
+                    method: 'POST'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                const summaryDiv = document.getElementById('summaryResult');
+                summaryDiv.innerHTML = `
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+
+                document.getElementById('summaryResponse').classList.remove('hidden');
+                document.getElementById('recordSection').classList.add('section-disabled');
+                showStatus('Conversation ended. Refresh the page to start a new conversation.', 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

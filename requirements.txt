@@ -1,7 +1,22 @@
-fastapi
-pydantic-settings
-uvicorn
-python-dotenv==1.1.1
+# FastAPI and web framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Database
+psycopg2-binary==2.9.9
+
+# AI/ML models
+openai-whisper==20231117
+azure-cognitiveservices-speech==1.34.0
+google-generativeai==0.3.2
+
+# Audio processing
+numpy==1.24.3
+
+# Utilities
+python-dotenv==1.0.0
 requests>=2.31.0
 pytest>=8.0.0
-azure-cognitiveservices-speech
