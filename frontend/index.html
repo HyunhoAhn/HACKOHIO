@@ -1155,6 +1155,32 @@
                             <div class="feedback-text">
                                 ${data.feedback?.overall_comment || 'N/A'}
                             </div>
+                            ${data.feedback?.strengths ? `
+                            <div class="feedback-text" style="background: rgba(0, 255, 0, 0.05); border-left: 3px solid var(--success-color);">
+                                <strong style="color: var(--success-color); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">✓ Strengths</strong>
+                                ${Object.entries(data.feedback.strengths).map(([category, points]) => `
+                                    <div style="margin-bottom: 12px;">
+                                        <strong style="color: var(--text-primary); text-transform: capitalize;">${category}:</strong>
+                                        <ul style="margin: 4px 0 0 20px; color: var(--text-secondary);">
+                                            ${Array.isArray(points) ? points.map(point => `<li>${point}</li>`).join('') : ''}
+                                        </ul>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ` : ''}
+                            ${data.feedback?.improvements ? `
+                            <div class="feedback-text" style="background: rgba(255, 170, 0, 0.05); border-left: 3px solid var(--warning-color);">
+                                <strong style="color: var(--warning-color); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">⚠ Areas for Improvement</strong>
+                                ${Object.entries(data.feedback.improvements).map(([category, points]) => `
+                                    <div style="margin-bottom: 12px;">
+                                        <strong style="color: var(--text-primary); text-transform: capitalize;">${category}:</strong>
+                                        <ul style="margin: 4px 0 0 20px; color: var(--text-secondary);">
+                                            ${Array.isArray(points) ? points.map(point => `<li>${point}</li>`).join('') : ''}
+                                        </ul>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ` : ''}
                             <div class="audio-control">
                                 <audio class="audio-player" id="${feedbackAudioId}" src="${data.feedback_audio_url || ''}"></audio>
                                 <button class="audio-btn paused" id="btn-${feedbackAudioId}" onclick="toggleAudioPlayback('${feedbackAudioId}', this)">▶ Play</button>
