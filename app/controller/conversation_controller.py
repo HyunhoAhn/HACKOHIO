@@ -95,7 +95,10 @@ async def end_conversation(conversation_id: UUID):
         - 요약 텍스트
     """
     try:
-        response = conversation_service.end_conversation(conversation_id)
+        # response = conversation_service.end_conversation(conversation_id)
+        response = await conversation_service.end_conversation(
+            conversation_id=conversation_id
+        )
         return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to end conversation: {str(e)}")

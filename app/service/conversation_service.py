@@ -455,8 +455,8 @@ class ConversationService:
         text += f"Vocabulary: {feedback.vocabulary_score:.0f}. "
         text += feedback.overall_comment
         return text
-    
-    def end_conversation(self, conversation_id: UUID) -> EndConversationResponse:
+
+    async def end_conversation(self, conversation_id: UUID) -> EndConversationResponse:
         """
         대화 종료
         
@@ -505,9 +505,34 @@ class ConversationService:
                 (conversation_id, conversation_id, conversation_id)
             )
             errors = cursor.fetchone()
-        
+
+        with db.get_cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT
+                    tf.overall_comment
+                FROM turns t
+                         LEFT JOIN turn_feedback tf ON t.turn_id = tf.turn_id
+                WHERE t.conversation_id = %s
+                """,
+                (conversation_id,)
+            )
+            rows = cursor.fetchall()
+
+        overall_comments = [row["overall_comment"] for row in rows]
+
+        # get total feedback text
+        print(f"Gemini generate total feedback...")
+        gemini_feedback = await asyncio.to_thread(
+            gemini_service.generate_total_feedback,
+            overall_comments
+        )
+
+
+
         summary_text = f"Great conversation! You completed {stats['total_turns']} turns. "
         summary_text += f"Your average overall score was {stats['avg_overall']:.1f}. Keep practicing!"
+        summary_text += " Overall, " + gemini_feedback[0].lower() + gemini_feedback[1:]
         
         return EndConversationResponse(
             conversation_id=conversation_id,
